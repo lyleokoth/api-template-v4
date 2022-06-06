@@ -12,7 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest
     environment:
-      name: Development
+      name: Test
     strategy:
       matrix:
         python-version: [3.7, 3.8, 3.9]
@@ -32,7 +32,7 @@ jobs:
         if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Create the Environment variables
+    - name: Create the Test Environment variables
       run: |
         touch .env
         echo FLASK_APP=${{secrets.FLASK_APP}} >> .env
@@ -41,12 +41,6 @@ jobs:
     - name: Test with pytest
       run: |
         if [ -d tests ] || [ -d test ]; then python -m pytest; fi
-
-    - name: Test application
-      run: |
-        python manage.py run &
-        sleep 10
-        curl http://127.0.0.1:5000/
 
   Test-Local:
     runs-on: ubuntu-latest
@@ -72,7 +66,7 @@ jobs:
         if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Create the Environment variables
+    - name: Create the Staging Environment variables
       run: |
         touch .env
         echo FLASK_APP=${{secrets.FLASK_APP}} >> .env
