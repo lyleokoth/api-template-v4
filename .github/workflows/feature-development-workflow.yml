@@ -31,20 +31,11 @@ jobs:
         if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Sort Project dependencies
-      run: isort
+    - name: Run the flake8 linter
+      run: flake8
 
-    - name: Commit isort changes
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add -A && git diff-index --cached --quiet HEAD || git commit -m 'isort'
-
-    - name: Push isort changes
-      uses: ad-m/github-push-action@v0.5.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
+    - name: Run the pylint linter
+      run: pylint
 
     - name: Create the Test Environment variables
       run: |
