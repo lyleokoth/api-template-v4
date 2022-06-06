@@ -3,6 +3,10 @@
 
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 def set_flask_environment(app) -> str:
     """Set the flask development environment.
@@ -24,12 +28,12 @@ def set_flask_environment(app) -> str:
 
     """
     if os.environ['FLASK_ENV'] == 'production':  # pragma: no cover
-        app.config.from_object('API.config.ProductionConfig')
+        app.config.from_object('api.config.ProductionConfig')
     elif os.environ['FLASK_ENV'] == 'development':  # pragma: no cover
-        app.config.from_object('API.config.DevelopmentConfig')
+        app.config.from_object('api.config.DevelopmentConfig')
     elif os.environ['FLASK_ENV'] == 'test':
-        app.config.from_object('API.config.TestingConfig')
+        app.config.from_object('api.config.TestingConfig')
     else:
-        app.config.from_object('API.config.DevelopmentConfig')
+        app.config.from_object('api.config.DevelopmentConfig')
 
     return os.environ['FLASK_ENV']

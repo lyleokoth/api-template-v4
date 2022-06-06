@@ -2,10 +2,6 @@
 """This module contain the confuguration for the application."""
 import os
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 
 class BaseConfig():
     """Base configuration."""
