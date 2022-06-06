@@ -35,7 +35,7 @@ jobs:
       run: flake8
 
     - name: Run the pylint linter
-      run: pylint
+      run: pylint --rcfile=.pylintrc api/
 
     - name: Create the Test Environment variables
       run: |
