@@ -1,3 +1,20 @@
+## v0.3.0 (2022-06-06)
+
+### Feat
+
+- updated all the workflows with code quality checks.
+- showing coverage report
+- creating code coverage.
+- suding the linters.
+- using isort.
+- added the configuration.
+
+### Fix
+
+- provided the pylint config file.
+- added the isort reqirement.
+- using the config classes.
+
 ## v0.2.1 (2022-06-06)
 
 ### Fix
