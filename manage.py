@@ -3,9 +3,9 @@
 
 from flask.cli import FlaskGroup
 
-from api import app
+from api import create_app
 
-cli = FlaskGroup(app)
+cli = FlaskGroup(create_app())
 
 if __name__ == '__main__':
     cli()
