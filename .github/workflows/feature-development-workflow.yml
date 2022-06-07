@@ -143,7 +143,7 @@ jobs:
     - name: Test application
       run: |
         python manage.py create_db
-        ptyhon manage.py seed_db
+        python manage.py seed_db
         python manage.py run &
         sleep 10
         curl http://127.0.0.1:5000/
