@@ -10,8 +10,26 @@ jobs:
   Build:
 
     runs-on: ubuntu-latest
+
     environment:
       name: Test
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: secrets.POSTGRES_USER
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+          POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     strategy:
       matrix:
         python-version: [3.7, 3.8, 3.9]
@@ -66,10 +84,14 @@ jobs:
       run: coverage xml
 
   Test-Local:
+
     runs-on: ubuntu-latest
+
     environment:
       name: Development
+
     needs: [Build]
+
     strategy:
       matrix:
         python-version: [3.7, 3.8, 3.9]
