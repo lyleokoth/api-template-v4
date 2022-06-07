@@ -1,3 +1,17 @@
+## v0.4.0 (2022-06-07)
+
+### Feat
+
+- created the database connection.
+- checking if env vars are set.
+- added the postgres connection string.
+- added mypy.
+- updated the project changelog.
+
+### Fix
+
+- added the mypy config.
+
 ## v0.3.0 (2022-06-06)
 
 ### Feat
