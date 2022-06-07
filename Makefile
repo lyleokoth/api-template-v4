@@ -29,4 +29,10 @@ bump-tag:
 	@cz bump
 	@cz changelog
 
-all: update install install-dev pre-commit initial-tag test run
+create-db:
+	@python manage.py create_db
+
+seed-db:
+	@python manage.py seed_db
+
+all: update install install-dev pre-commit initial-tag test create-db seed-db run
