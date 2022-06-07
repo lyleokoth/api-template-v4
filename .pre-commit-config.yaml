@@ -21,8 +21,6 @@ repos:
     - staging
     - --branch
     - production
-    - --branch
-    - release
     id: no-commit-to-branch
   # - id: pretty-format-json
   - id: requirements-txt-fixer

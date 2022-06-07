@@ -3,37 +3,33 @@
 
 import os
 
-from dotenv import load_dotenv
 
-load_dotenv()
-
-
-def set_flask_environment(app) -> str:
-    """Set the flask development environment.
-
-    Parameters
-    ----------
-    app: flask.Flask
-        The flask application object
+def are_flask_environment_variable_set() -> bool:
+    """Check if all the Flask environment variables are set.
 
     Raises
     ------
     KeyError
-        If the FLASK_ENV environment variable is not set.
+        If any of the environment variables are not set.
 
     Returns
     -------
-    str:
-        Flask operating environment i.e development
+    bool:
+        True if all the environment variables are set else False if any is missing.
 
     """
-    if os.environ['FLASK_ENV'] == 'production':  # pragma: no cover
-        app.config.from_object('api.config.ProductionConfig')
-    elif os.environ['FLASK_ENV'] == 'development':  # pragma: no cover
-        app.config.from_object('api.config.DevelopmentConfig')
-    elif os.environ['FLASK_ENV'] == 'test':
-        app.config.from_object('api.config.TestingConfig')
-    else:
-        app.config.from_object('api.config.DevelopmentConfig')
+    try:
+        os.environ['FLASK_ENV']  # pylint: disable=W0104
+        print('The FLASK_ENV is set')
+    except KeyError:
+        print('The FLASK_ENV is not set')
+        return False
 
-    return os.environ['FLASK_ENV']
+    try:
+        os.environ['FLASK_APP']  # pylint: disable=W0104
+        print('The FLASK_APP is set')
+    except KeyError:
+        print('The FLASK_APP is not set')
+        return False
+
+    return True

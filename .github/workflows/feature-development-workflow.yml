@@ -10,8 +10,26 @@ jobs:
   Build:
 
     runs-on: ubuntu-latest
+
     environment:
       name: Test
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: secrets.POSTGRES_USER
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+          POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     strategy:
       matrix:
         python-version: [3.7, 3.8, 3.9]
@@ -37,11 +55,21 @@ jobs:
     - name: Run the pylint linter
       run: pylint --rcfile=.pylintrc api/
 
+    # - name: Run the mypy linter
+    #   run: mypy -p api
+
     - name: Create the Test Environment variables
       run: |
         touch .env
         echo FLASK_APP=${{secrets.FLASK_APP}} >> .env
         echo FLASK_ENV=${{secrets.FLASK_ENV}} >> .env
+        echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
+
+        echo POSTGRES_HOST=${{secrets.POSTGRES_HOST}} >> .env
+        echo POSTGRES_DB=${{secrets.POSTGRES_DB}} >> .env
+        echo POSTGRES_PORT=${{secrets.POSTGRES_PORT}} >> .env
+        echo POSTGRES_USER=${{secrets.POSTGRES_USER}} >> .env
+        echo POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}} >> .env
 
     - name: Test with pytest
       run: |
@@ -56,10 +84,30 @@ jobs:
       run: coverage xml
 
   Test-Local:
+
     runs-on: ubuntu-latest
+
     environment:
       name: Development
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+          POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}_dev
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     needs: [Build]
+
     strategy:
       matrix:
         python-version: [3.7, 3.8, 3.9]
@@ -84,9 +132,19 @@ jobs:
         touch .env
         echo FLASK_APP=${{secrets.FLASK_APP}} >> .env
         echo FLASK_ENV=${{secrets.FLASK_ENV}} >> .env
+        echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
+
+        echo POSTGRES_HOST=${{secrets.POSTGRES_HOST}} >> .env
+        echo POSTGRES_DB=${{secrets.POSTGRES_DB}} >> .env
+        echo POSTGRES_PORT=${{secrets.POSTGRES_PORT}} >> .env
+        echo POSTGRES_USER=${{secrets.POSTGRES_USER}} >> .env
+        echo POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}} >> .env
 
     - name: Test application
       run: |
+        python manage.py create_db
+        python manage.py seed_db
         python manage.py run &
         sleep 10
         curl http://127.0.0.1:5000/
+        curl http://127.0.0.1:5000/users

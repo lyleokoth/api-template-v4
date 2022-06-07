@@ -26,7 +26,20 @@ initial-tag:
 	@git tag -a -m "Initial tag." v0.0.1
 
 bump-tag:
-	@cz bump
-	@cz changelog
+	@cz bump --check-consistency --changelog
 
-all: update install install-dev pre-commit initial-tag test run
+initialize-db:
+	@flask db init
+	@flask db migrate -m "Initial Migration."
+	@flask db upgrade
+
+upgrade-db:
+	@flask db upgrade
+
+create-db:
+	@python manage.py create_db
+
+seed-db:
+	@python manage.py seed_db
+
+all: update install install-dev pre-commit initial-tag test create-db seed-db run
