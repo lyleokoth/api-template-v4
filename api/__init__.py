@@ -5,6 +5,7 @@ import sys
 
 from dotenv import load_dotenv
 from flask import Flask
+from flask_migrate import Migrate
 
 from .blueprints.default.views import default
 from .blueprints.extensions import db
@@ -30,9 +31,12 @@ def create_app():
         else:
             app.config.from_object('api.config.DevelopmentConfig')
 
-        print(f"The database connetion string is {app.config['SQLALCHEMY_DATABASE_URI']}")
+        print(f"The configuration used is for {os.environ['FLASK_ENV']} environment.")
+        print(f"The database connection string is {app.config['SQLALCHEMY_DATABASE_URI']}.")
 
         db.init_app(app=app)
+        migrate = Migrate()
+        migrate.init_app(app, db)
 
         return app
 
