@@ -136,7 +136,6 @@ jobs:
         echo POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}} >> .env
     - name: Test application
       run: |
-        flask db upgrade
         python manage.py create_db
         python manage.py seed_db
         python manage.py run &
