@@ -3,11 +3,12 @@
 
 import pytest
 
-from api import app
+from api import create_app
 
 
 @pytest.fixture
 def client():
     """Create the test client."""
+    app = create_app()
     test_client = app.test_client()
     return test_client
