@@ -26,8 +26,7 @@ initial-tag:
 	@git tag -a -m "Initial tag." v0.0.1
 
 bump-tag:
-	@cz bump
-	@cz changelog
+	@cz bump --check-consistency --changelog
 
 create-db:
 	@python manage.py create_db
