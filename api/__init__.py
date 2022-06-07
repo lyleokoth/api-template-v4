@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from flask import Flask
 
 from .blueprints.default.views import default
+from .blueprints.extensions import db
 from .helpers import are_flask_environment_variable_set
 
 load_dotenv()
@@ -30,6 +31,8 @@ def create_app():
             app.config.from_object('api.config.DevelopmentConfig')
 
         print(f"The database connetion string is {app.config['SQLALCHEMY_DATABASE_URI']}")
+
+        db.init_app(app=app)
 
         return app
 
