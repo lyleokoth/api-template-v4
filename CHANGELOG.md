@@ -1,3 +1,14 @@
+## v0.5.0 (2022-06-07)
+
+### Feat
+
+- added the database functionality.
+
+### Fix
+
+- added the database connection secrets.
+- muted the mypy linter.
+
 ## v0.4.0 (2022-06-07)
 
 ### Feat
