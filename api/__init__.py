@@ -30,7 +30,7 @@ def create_app():
         else:
             app.config.from_object('api.config.DevelopmentConfig')
 
-        print(f"The configuration used is for {app.config['FLASK_ENV']} environment.")
+        print(f"The configuration used is for {os.environ['FLASK_ENV']} environment.")
         print(f"The database connection string is {app.config['SQLALCHEMY_DATABASE_URI']}.")
 
         db.init_app(app=app)
