@@ -1,3 +1,5 @@
+
+  
 name: "Production Build"
 
 on:
@@ -139,4 +141,4 @@ jobs:
         python manage.py run &
         sleep 10
         curl http://127.0.0.1:5000/
-        curl http://127.0.0.1:5000/users0/
+        curl http://127.0.0.1:5000/users/
