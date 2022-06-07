@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     environment:
-      name: Stage
+      name: Test
 
     services:
       postgres:
