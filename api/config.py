@@ -17,6 +17,8 @@ class BaseConfig():
     POSTGRES_USER = os.getenv('POSTGRES_USER', 'lyle')
     POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', '')
 
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+
 
 class TestingConfig(BaseConfig):
     """Configuration used during testing."""
