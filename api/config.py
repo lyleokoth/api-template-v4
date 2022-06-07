@@ -11,6 +11,15 @@ class BaseConfig():
     TESTING = False
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+    POSTGRES_HOST = os.environ['POSTGRES_HOST']
+    POSTGRES_DB = os.environ['POSTGRES_DB']
+    POSTGRES_PORT = os.environ['POSTGRES_PORT']
+    POSTGRES_USER = os.environ['POSTGRES_USER']
+    POSTGRES_PASSWORD = os.environ['POSTGRES_PASSWORD']
+
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 
 class TestingConfig(BaseConfig):
     """Configuration used during testing."""
@@ -18,6 +27,15 @@ class TestingConfig(BaseConfig):
     SECRET_KEY = os.getenv('SECRET_KEY', 'secret_key')
     DEBUG = True
     TESTING = True
+
+    POSTGRES_HOST = os.environ['POSTGRES_HOST']
+    POSTGRES_DB = f"{os.environ['POSTGRES_DB']}_test"
+    POSTGRES_PORT = os.environ['POSTGRES_PORT']
+    POSTGRES_USER = os.environ['POSTGRES_USER']
+    POSTGRES_PASSWORD = os.environ['POSTGRES_PASSWORD']
+
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class DevelopmentConfig(BaseConfig):
@@ -27,6 +45,15 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     TESTING = False
 
+    POSTGRES_HOST = os.environ['POSTGRES_HOST']
+    POSTGRES_DB = f"{os.environ['POSTGRES_DB']}_dev"
+    POSTGRES_PORT = os.environ['POSTGRES_PORT']
+    POSTGRES_USER = os.environ['POSTGRES_USER']
+    POSTGRES_PASSWORD = os.environ['POSTGRES_PASSWORD']
+
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 
 class StagingConfig(BaseConfig):
     """Configuration used during staging."""
@@ -35,6 +62,15 @@ class StagingConfig(BaseConfig):
     DEBUG = True
     TESTING = False
 
+    POSTGRES_HOST = os.environ['POSTGRES_HOST']
+    POSTGRES_DB = f"{os.environ['POSTGRES_DB']}_stage"
+    POSTGRES_PORT = os.environ['POSTGRES_PORT']
+    POSTGRES_USER = os.environ['POSTGRES_USER']
+    POSTGRES_PASSWORD = os.environ['POSTGRES_PASSWORD']
+
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 
 class ProductionConfig(BaseConfig):
     """Configuration used during production."""
@@ -42,3 +78,12 @@ class ProductionConfig(BaseConfig):
     SECRET_KEY = os.getenv('SECRET_KEY', 'secret_key')
     DEBUG = False
     TESTING = False
+
+    POSTGRES_HOST = os.environ['POSTGRES_HOST']
+    POSTGRES_DB = f"{os.environ['POSTGRES_DB']}_prod"
+    POSTGRES_PORT = os.environ['POSTGRES_PORT']
+    POSTGRES_USER = os.environ['POSTGRES_USER']
+    POSTGRES_PASSWORD = os.environ['POSTGRES_PASSWORD']
+
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
